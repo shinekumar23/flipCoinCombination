@@ -9,8 +9,8 @@ do
                      1) face=T
                         ;;
             esac
-				singlet[$flip]="$face"
-				singletArray[j++]=$face
+	    singlet[$flip]="$face"
+	    singletArray[j++]=$face
 done
 echo "The singlet combination: ${singletArray[@]}"
 numberOfSingletHeads=$(echo ${singletArray[@]} | tr -cd 'H' | wc -c)
