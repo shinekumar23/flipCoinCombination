@@ -49,3 +49,40 @@ Tails_Doublet_Percentage=$(echo ${a%.*})
 echo "The doublet Heads Percentage is $Heads_Doublet_Percentage"
 echo "The doublet Tails Percentage is $Tails_Doublet_Percentage"
 
+declare -A triplet
+for (( i=1; i<=7; i++ ))
+do
+         flip=$((RANDOM%8))
+         case $flip in
+                  0) face=HHT
+                     ;;
+                  1) face=HTH
+                     ;;
+                  2) face=HTT
+                     ;;
+                  3) face=HHH
+                     ;;
+                  4) face=THT
+                     ;;
+                  5) face=THH
+                     ;;
+                  6) face=TTH
+                     ;;
+                  7) face=TTT
+                     ;;
+
+         esac
+         triplet[$face]=$percentage
+         tripletArray[l++]=$face
+done
+
+echo "The triplet combination: ${tripletArray[@]}"
+numberOfTripletTails=$(echo ${tripletArray[@]} | tr -cd 'T' | wc -c)
+numberOfTripletHeads=$(echo ${tripletArray[@]} | tr -cd 'H' | wc -c)
+b=$(echo "scale=2;$numberOfTripletHeads/21*100" | bc)
+Heads_Triplet_Percentage=$(echo ${b%.*})
+c=$(echo "scale=2;$numberOfTripletTails/21*100" | bc)
+Tails_Triplet_Percentage=$(echo ${c%.*})
+echo "Heads triplet percentage is $Heads_Triplet_Percentage"
+echo "Tails triplet percentage is $Tails_Triplet_Percentage"
+
