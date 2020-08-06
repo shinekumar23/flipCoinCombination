@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash -x 
 declare -A singlet
 for (( i=1; i<=7; i++ ))
 do
@@ -19,8 +19,13 @@ x=$(echo "scale=2;$numberOfSingletHeads/7*100" | bc)
 Heads_Singlet_Percentage=$(echo ${x%.*})
 y=$(echo "scale=2;$numberOfSingletTails/7*100" | bc)
 Tails_Singlet_Percentage=$(echo ${y%.*})
-echo "Heads Singlet percentage is $Heads_Singlet_Percentage"
-echo "Tails Singlet percentage is $Tails_Singlet_Percentage"
+
+if [ $Heads_Singlet_Percentage -gt $Tails_Singlet_Percentage ]
+then
+         echo "Heads Win in singlet with a percentage of $Heads_Singlet_Percentage"
+else
+         echo "Tails Win in singlet with a percentage of $Tails_Singlet_Percentage"
+fi
 
 declare -A doublet
 for (( i=1; i<=7; i++ ))
@@ -46,8 +51,16 @@ z=$(echo "scale=2;$numberOfDoubletHeads/14*100" | bc)
 Heads_Doublet_Percentage=$(echo ${z%.*})
 a=$(echo "scale=2;$numberOfDoubletTails/14*100" | bc)
 Tails_Doublet_Percentage=$(echo ${a%.*})
-echo "The doublet Heads Percentage is $Heads_Doublet_Percentage"
-echo "The doublet Tails Percentage is $Tails_Doublet_Percentage"
+
+if [ $Heads_Doublet_Percentage -gt $Tails_Doublet_Percentage ]
+then
+               echo "Heads won in doublet with a percentage of $Heads_Doublet_Percentage"
+elif [ $Heads_Doublet_Percentage -eq $Tails_Doublet_Percentage ]
+then
+               echo "Heads and tails made a tie in doublet with 50% each"
+else
+               echo "Tails won in doublet with a percentage of $Tails_Doublet_Percentage"
+fi
 
 declare -A triplet
 for (( i=1; i<=7; i++ ))
@@ -83,6 +96,24 @@ b=$(echo "scale=2;$numberOfTripletHeads/21*100" | bc)
 Heads_Triplet_Percentage=$(echo ${b%.*})
 c=$(echo "scale=2;$numberOfTripletTails/21*100" | bc)
 Tails_Triplet_Percentage=$(echo ${c%.*})
-echo "Heads triplet percentage is $Heads_Triplet_Percentage"
-echo "Tails triplet percentage is $Tails_Triplet_Percentage"
+
+if [ $Heads_Triplet_Percentage -gt $Tails_Triplet_Percentage ]
+then
+               echo "Heads won in triplet with a percentage of $Heads_Triplet_Percentage"
+elif [ $Heads_Triplet_Percentage -eq $Tails_Triplet_Percentage ]
+then
+               echo "Heads and tails made a tie in triplet with 50% each"
+else
+               echo "Tails won in triplet with a percentage of $Tails_Triplet_Percentage"
+fi
+
+HeadsTotalPercentage=$(($Heads_Singlet_Percentage+$Heads_Doublet_Percentage+$Heads_Triplet_Percentage))
+TailsTotalPercentage=$(($Tails_Singlet_Percentage+$Tails_Doublet_Percentage+$Tails_Triplet_Percentage))
+if [ $HeadsTotalPercentage -gt $TailsTotalPercentage ]
+then
+               echo "Heads Won with a total percentage of $HeadsTotalPercentage among singlet,doublet and triplet combination"
+else
+               echo "Tails Won with a total percentage of $TailsTotalPercentage among singlet,doublet and triplet combination"
+fi
+
 
